@@ -10,6 +10,7 @@ namespace eCommerceApp.Application.Mapping;
 /// </summary>
 public class MappingConfiguration : Profile
 {
+    // test
     /// <summary>
     /// Initializes a new instance of the <see cref="MappingConfiguration"/> class.
     /// Sets up the mappings between DTOs and domain entities.
