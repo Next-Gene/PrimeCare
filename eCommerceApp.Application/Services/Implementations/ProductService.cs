@@ -33,9 +33,9 @@ public class ProductService : IProductService
     public  async Task<ServiceResponse> DeleteAsync(Guid id)
     {
         int result = await _productInterface.DeleteAsync(id);
-
-       return result > 0 ? new ServiceResponse(true, "Product Deleated") : 
-       new ServiceResponse(false, "Product failed to be Deleated");
+     
+        return result > 0 ? new ServiceResponse(true, "Product Deleated") : 
+       new ServiceResponse(false, "Product Not Found or  failed to be Deleated");
         
 
 
