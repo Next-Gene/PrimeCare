@@ -1,5 +1,7 @@
-﻿using eCommerceApp.Application.DTOs;
+﻿using AutoMapper;
+using eCommerceApp.Application.DTOs;
 using eCommerceApp.Application.DTOs.Category;
+using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
@@ -9,36 +11,71 @@ namespace eCommerceApp.Application.Services.Implementations;
 public class CategoryService : ICategoryService
 {
     private readonly IGeneric<Category> _categoryInterface;
+    private readonly IMapper _mapper;
 
-    public CategoryService(IGeneric<Category> categoryInterface)
+    public CategoryService(IGeneric<Category> categoryInterface, IMapper mapper)
     {
         _categoryInterface = categoryInterface;
+        _mapper = mapper;
     }
 
     #region Methods
-    public Task<ServiceResponse> AddAsync(CreateCategoryDto category)
+    public async Task<ServiceResponse> AddAsync(CreateCategoryDto category)
     {
-        throw new NotImplementedException();
+
+        var mappedData = _mapper.Map<Category>(category);
+        int result = await _categoryInterface.AddAsync(mappedData);
+        return result > 0 ? new ServiceResponse(true, "Category Added") :
+       new ServiceResponse(false, "Category failed to be Added");
+
+
     }
 
-    public Task<ServiceResponse> DeleteAsync(Guid id)
+    public async Task<ServiceResponse> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+
+        int result = await _categoryInterface.DeleteAsync(id);
+
+        return result > 0 ? new ServiceResponse(true, "Category Deleated") :
+        new ServiceResponse(false, "Category failed to be Deleated");
+
     }
 
-    public Task<IEnumerable<GetCategoryDto>> GetAllAsync()
+    public async Task<IEnumerable<GetCategoryDto>> GetAllAsync()
     {
-        throw new NotImplementedException();
+
+
+
+        var rawData = await _categoryInterface.GetAllAsync();
+        if (!rawData.Any()) return [];
+        return _mapper.Map<IEnumerable<GetCategoryDto>>(rawData);
+
     }
 
-    public Task<GetCategoryDto> GetByIdAsync(Guid id)
+    public async Task<GetCategoryDto> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+
+
+        var rawData = await _categoryInterface.GetByIdAsync(id);
+        if (rawData == null) return new GetCategoryDto();
+        return _mapper.Map<GetCategoryDto>(rawData);
+
     }
 
-    public Task<ServiceResponse> UpdateAsync(UpdateCategoryDto category)
+    public async Task<ServiceResponse> UpdateAsync(UpdateCategoryDto category)
     {
-        throw new NotImplementedException();
+
+        var mappedData = _mapper.Map<Category>(category);
+        int result = await _categoryInterface.UpdateAsync(mappedData);
+        return result > 0 ? new ServiceResponse(true, "Category Updated") :
+       new ServiceResponse(false, "Category failed to be Updated");
+
+
+
     }
     #endregion
 }
+
+//////////////////////////////////
+///
+
