@@ -1,4 +1,5 @@
-﻿using eCommerceApp.Application.DTOs;
+﻿using AutoMapper;
+using eCommerceApp.Application.DTOs;
 using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Domain.Entities;
@@ -9,36 +10,73 @@ namespace eCommerceApp.Application.Services.Implementations;
 public class ProductService : IProductService
 {
     private readonly IGeneric<Product> _productInterface;
+    private readonly IMapper _mapper;
 
-    public ProductService(IGeneric<Product> productInterface)
+    public ProductService(IGeneric<Product> productInterface ,IMapper mapper)
     {
         _productInterface = productInterface;
+        _mapper = mapper;
     }
 
     #region Mehtods
-    public Task<ServiceResponse> AddAsync(CreateProductDto product)
+    public async Task<ServiceResponse> AddAsync(CreateProductDto product)
     {
-        throw new NotImplementedException();
+
+        var mappedData=_mapper.Map<Product>(product);
+        int result = await _productInterface.AddAsync(mappedData);
+        return result > 0 ? new ServiceResponse(true, "Product Added") :
+       new ServiceResponse(false, "Product failed to be Added");
+
+
     }
 
-    public Task<ServiceResponse> DeleteAsync(Guid id)
+    public  async Task<ServiceResponse> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        int result = await _productInterface.DeleteAsync(id);
+
+       return result > 0 ? new ServiceResponse(true, "Product Deleated") : 
+       new ServiceResponse(false, "Product failed to be Deleated");
+        
+
+
+
+
+
     }
 
-    public Task<IEnumerable<GetProductDto>> GetAllAsync()
+    public async Task<IEnumerable<GetProductDto>> GetAllAsync()
     {
-        throw new NotImplementedException();
+
+        var rawData = await _productInterface.GetAllAsync();
+        if (!rawData.Any()) return [];
+        return _mapper.Map<IEnumerable<GetProductDto>>(rawData);
+
+
+
     }
 
-    public Task<GetProductDto> GetByIdAsync(Guid id)
+    public async Task<GetProductDto> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+
+        var rawData = await _productInterface.GetByIdAsync(id);
+        if (rawData == null) return new GetProductDto();
+        return _mapper.Map<GetProductDto>(rawData);
+
+
+
+
+
     }
 
-    public Task<ServiceResponse> UpdateAsync(UpdateProductDto product)
+    public  async Task<ServiceResponse> UpdateAsync(UpdateProductDto product)
     {
-        throw new NotImplementedException();
+
+        var mappedData = _mapper.Map<Product>(product);
+        int result = await _productInterface.UpdateAsync(mappedData);
+        return result > 0 ? new ServiceResponse(true, "Product Updated") :
+       new ServiceResponse(false, "Product failed to be Updated");
+
+
     }
     #endregion
 }
