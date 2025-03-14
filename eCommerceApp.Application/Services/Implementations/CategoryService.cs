@@ -36,8 +36,11 @@ public class CategoryService : ICategoryService
 
         int result = await _categoryInterface.DeleteAsync(id);
 
+  
+
+
         return result > 0 ? new ServiceResponse(true, "Category Deleated") :
-        new ServiceResponse(false, "Category failed to be Deleated");
+        new ServiceResponse(false, "Category not found or failed to be Deleated");
 
     }
 
