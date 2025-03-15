@@ -31,7 +31,7 @@ public static class ServiceContainer
         {
             // Ensure this is the correct assembly
             sqlOptions.MigrationsAssembly
-            (typeof(AppContext).Assembly.FullName);
+            (typeof(AppDbContext).Assembly.FullName);
 
             // Enable automatic retries for transient failure
             sqlOptions.EnableRetryOnFailure();
