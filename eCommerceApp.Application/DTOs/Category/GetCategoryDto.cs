@@ -9,9 +9,7 @@ public class GetCategoryDto : CategoryBaseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier of the category.
-    /// </summary>
-   
-    
+    /// </summary>  
     public Guid Id { get; set; }
 
     /// <summary>

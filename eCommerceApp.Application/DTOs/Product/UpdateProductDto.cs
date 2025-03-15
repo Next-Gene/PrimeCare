@@ -11,6 +11,5 @@ public class UpdateProductDto : ProductBaseDto
     /// Gets or sets the ID of the product.
     /// </summary>
     [Required]
-
     public Guid Id { get; set; }
 }

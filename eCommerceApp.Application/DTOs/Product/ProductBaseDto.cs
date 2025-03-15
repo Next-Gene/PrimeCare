@@ -12,21 +12,18 @@ public class ProductBaseDto
     /// </summary>
 
     [Required]
-
     public string? Name { get; set; }
 
     /// <summary>
     /// Gets or sets the description of the product.
     /// </summary>
     [Required]
-
     public string? Description { get; set; }
 
     /// <summary>
     /// Gets or sets the price of the product.
     /// </summary>
     [Required]
-
     [DataType(DataType.Currency)]
     public decimal Price { get; set; }
 
@@ -34,14 +31,11 @@ public class ProductBaseDto
     /// Gets or sets the image URL of the product.
     /// </summary>
     [Required]
-
-
     public string? Base64Image { get; set; }
 
     /// <summary>
     /// Gets or sets the quantity of the product in stock.
     /// </summary>
-
     [Required]
     public int Quantity { get; set; }
 
@@ -49,6 +43,5 @@ public class ProductBaseDto
     /// Gets or sets the category ID of the product.
     /// </summary>
     [Required]
-
     public Guid CategoryId { get; set; }
 }
