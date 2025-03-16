@@ -2,6 +2,7 @@
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Infrastructure.Data;
 using eCommerceApp.Infrastructure.Repositories;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,8 +36,8 @@ public static class ServiceContainer
 
             // Enable automatic retries for transient failure
             sqlOptions.EnableRetryOnFailure();
-        }),
-        ServiceLifetime.Scoped);
+        })
+        .UseExceptionProcessor(), ServiceLifetime.Scoped);
 
         // Register generic repositories
         services.AddScoped<IGeneric<Product>, GenericRepository<Product>>();
