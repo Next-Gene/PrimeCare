@@ -1,6 +1,6 @@
 # eCommerceApp
 
-eCommerceApp is a .NET 8 based application designed to manage an e-commerce platform. It includes functionalities for managing products, categories, and more.
+eCommerceApp is a .NET 8 based application designed to provide a robust e-commerce platform. This solution includes multiple projects targeting different aspects of the application, such as the domain, application, infrastructure, and host layers.
 
 ## Features
 
@@ -34,10 +34,19 @@ eCommerceApp is a .NET 8 based application designed to manage an e-commerce plat
 
 ### Project Structure
 
-- `eCommerceApp.Application`: Contains application logic and DTOs.
-- `eCommerceApp.Domain`: Contains domain entities and interfaces.
-- `eCommerceApp.Infrastructure`: Contains data access logic and repository implementations.
-- `eCommercecApp.Host`: The entry point of the application.
+- **eCommerceApp.Domain**: Contains the domain entities and business logic.
+- **eCommerceApp.Application**: Implements application services and business rules.
+- **eCommerceApp.Infrastructure**: Handles data access and database migrations.
+- **eCommerceApp.Host**: The entry point of the application, including API endpoints.
+
+## Dependencies
+
+- AutoMapper (14.0.0)
+- Microsoft.EntityFrameworkCore (8.0.14)
+- Microsoft.EntityFrameworkCore.SqlServer (8.0.14)
+- Microsoft.EntityFrameworkCore.Tools (8.0.14)
+- Microsoft.Extensions.Configuration.Abstractions (9.0.3)
+- Swashbuckle.AspNetCore (6.6.2)
 
 ### Contributing
 
