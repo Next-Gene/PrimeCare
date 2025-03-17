@@ -1,5 +1,5 @@
-using eCommerceApp.Infrastructure.DependencyInjection;
 using eCommerceApp.Application.DependencyInjection;
+using eCommerceApp.Infrastructure.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +22,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseInfrastructureService();
 
 app.UseHttpsRedirection();
 

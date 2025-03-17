@@ -46,6 +46,16 @@ public class ExceptionHandlingMiddleware
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
                         await context.Response.WriteAsync("Cannot insert null");
                         break;
+
+                    case 547: // Foregin key constraint violation
+                        context.Response.StatusCode = StatusCodes.Status409Conflict;
+                        await context.Response.WriteAsync("Foregin key constraint violation");
+                        break;
+
+                    default:
+                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                        await context.Response.WriteAsync("An error occurred while proccessing your request");
+                        break;
                 }
             }
             else

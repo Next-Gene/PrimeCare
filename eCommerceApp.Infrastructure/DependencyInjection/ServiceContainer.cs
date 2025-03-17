@@ -1,8 +1,10 @@
 ﻿using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Infrastructure.Data;
+using eCommerceApp.Infrastructure.Middleware;
 using eCommerceApp.Infrastructure.Repositories;
 using EntityFramework.Exceptions.SqlServer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,5 +46,18 @@ public static class ServiceContainer
         services.AddScoped<IGeneric<Category>, GenericRepository<Category>>();
 
         return services;
+    }
+
+    /// <summary>
+    /// Configures the application to use infrastructure services.
+    /// </summary>
+    /// <param name="app">The application builder to configure.</param>
+    /// <returns>The application builder with the configured services.</returns>
+    public static IApplicationBuilder UseInfrastructureService
+        (this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+        return app;
     }
 }
