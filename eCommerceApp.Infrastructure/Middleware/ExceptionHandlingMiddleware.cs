@@ -33,6 +33,9 @@ public class ExceptionHandlingMiddleware
         }
         catch (DbUpdateException ex)
         {
+
+            context.Response.ContentType = "application/json";
+
             if (ex.InnerException is SqlException innerException)
             {
                 switch (innerException.Number)
@@ -66,6 +69,8 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
+            context.Response.ContentType = "application/json";
+
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsync($"An error occurred {ex.Message}");
         }
