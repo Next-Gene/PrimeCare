@@ -11,6 +11,8 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("log/log.text", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Host.UseSerilog();
+Log.Logger.Information("Application is building....");
 
 // Add services to the container.
 
@@ -22,23 +24,37 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationService();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var app = builder.Build();
+
+    app.UseSerilogRequestLogging();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseInfrastructureService();
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+
+    app.MapControllers();
+
+    Log.Logger.Information("Application is running....");
+
+    app.Run();
 }
-
-app.UseInfrastructureService();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-
-app.MapControllers();
-
-app.Run();
-
+catch (Exception ex)
+{
+    Log.Logger.Error(ex, "Application Failed to start....");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
