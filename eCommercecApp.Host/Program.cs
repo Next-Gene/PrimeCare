@@ -1,8 +1,16 @@
 using eCommerceApp.Application.DependencyInjection;
 using eCommerceApp.Infrastructure.DependencyInjection;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("log/log.text", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 
 // Add services to the container.
 
