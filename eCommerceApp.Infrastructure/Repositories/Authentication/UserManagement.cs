@@ -2,6 +2,7 @@
 using eCommerceApp.Domain.Interfaces.Authentication;
 using eCommerceApp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace eCommerceApp.Infrastructure.Repositories.Authentication;
