@@ -139,8 +139,29 @@ public class AuthenticationService : IAuthenticationService
             : new LoginResponse(Success: true, Token: jwtToken, RefreshToken: refreshToken);
     }
 
-    public Task<LoginResponse> ReviveTokenUser(string refreshToken)
+    /// <summary>
+    /// Revives a user's token using a refresh token.
+    /// </summary>
+    /// <param name="refreshToken">The refresh token.</param>
+    /// <returns>A task that represents the asynchronous operation.
+    /// The task result contains a <see cref="LoginResponse"/> indicating the result of the token revival operation.</returns>
+    public async Task<LoginResponse> ReviveTokenUser(string refreshToken)
     {
-        throw new NotImplementedException();
+        var validationResult = await _tokenManagement
+            .ValidateRefreshToken(refreshToken);
+        if (!validationResult)
+            return new LoginResponse(Message: "Invalid Token");
+
+        string userId = await _tokenManagement
+            .GetUserIdByRefreshToken(refreshToken);
+        AppUser? user = await _userManagement.GetUserById(userId);
+        var claims = await _userManagement.GetUserClaims(user!.Email!);
+        string newjwtToken = _tokenManagement.GenerateToken(claims);
+        string newRefreshToken = _tokenManagement.GetRefreshToken();
+
+        await _tokenManagement
+            .UpdateRefreshToken(userId, newRefreshToken);
+        return new LoginResponse
+            (Success: true, Token: newjwtToken, RefreshToken: newRefreshToken);
     }
 }
