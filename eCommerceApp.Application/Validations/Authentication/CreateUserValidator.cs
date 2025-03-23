@@ -3,9 +3,15 @@ using FluentValidation;
 
 namespace eCommerceApp.Application.Validations.Authentication;
 
-public class CreateUserValidater : AbstractValidator<CreateUser>
+/// <summary>
+/// Validator for <see cref="CreateUserDto"/>.
+/// </summary>
+public class CreateUserValidator : AbstractValidator<CreateUserDto>
 {
-    public CreateUserValidater()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateUserValidator"/> class.
+    /// </summary>
+    public CreateUserValidator()
     {
         RuleFor(x => x.FullName)
             .NotEmpty()
@@ -34,21 +40,5 @@ public class CreateUserValidater : AbstractValidator<CreateUser>
         RuleFor(x => x.ConfirmPassword)
             .Equal(x => x.Password)
             .WithMessage("Password do not match.");
-    }
-}
-
-public class LoginUserValidater : AbstractValidator<LoginUser>
-{
-    public LoginUserValidater()
-    {
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage("Email is required.")
-            .EmailAddress()
-            .WithMessage("Invalid email format.");
-
-        RuleFor(x => x.Password)
-            .NotEmpty()
-            .WithMessage("Password is required.");
     }
 }

@@ -53,6 +53,8 @@ public static class ServiceContainer
         // Register generic repositories
         services.AddScoped<IGeneric<Product>, GenericRepository<Product>>();
         services.AddScoped<IGeneric<Category>, GenericRepository<Category>>();
+        // Register generic Logger
+        services.AddScoped(typeof(IAppLogger<>), typeof(SerilogLoggerAdapter<>));
 
         // Register the user manager
         services.AddDefaultIdentity<AppUser>(options =>
@@ -92,8 +94,6 @@ public static class ServiceContainer
                 };
             });
 
-        // Register generic Logger
-        services.AddScoped(typeof(IAppLogger<>), typeof(SerilogLoggerAdapter<>));
         services.AddScoped<IUserManagement, UserManagement>();
         services.AddScoped<ITokenManagement, TokenManagement>();
         services.AddScoped<IRoleManagement, RoleManagement>();
