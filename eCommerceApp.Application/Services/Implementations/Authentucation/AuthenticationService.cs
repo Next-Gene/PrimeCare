@@ -105,9 +105,38 @@ public class AuthenticationService : IAuthenticationService
         };
     }
 
-    public Task<LoginResponse> LoginUser(LoginUserDto user)
+    /// <summary>
+    /// Logs in a user.
+    /// </summary>
+    /// <param name="user">The user to log in.</param>
+    /// <returns>A task that represents the asynchronous operation.
+    /// The task result contains a <see cref="LoginResponse"/> indicating the result of the login operation.</returns>
+    public async Task<LoginResponse> LoginUser(LoginUserDto user)
     {
-        throw new NotImplementedException();
+        var _validationResult = await _validationService
+            .ValidateAsync(user, _loginUserValidator);
+        if (!_validationResult.Success)
+            return new LoginResponse(Message: _validationResult.Message);
+
+        var mappedModel = _mapper.Map<AppUser>(user);
+        mappedModel.PasswordHash = user.Password;
+
+        bool loginResult = await _userManagement.LoginUser(mappedModel);
+        if (!loginResult)
+            return new LoginResponse
+                (Message: "Email not found or invalid credentails");
+
+        var _user = await _userManagement.GetUserByEmail(user.Email);
+        var claims = await _userManagement.GetUserClaims(_user!.Email!);
+
+        string jwtToken = _tokenManagement.GenerateToken(claims);
+        string refreshToken = _tokenManagement.GetRefreshToken();
+
+        int saveTokenResult = await _tokenManagement
+            .AddRefreshToken(_user.Id, refreshToken);
+        return saveTokenResult <= 0
+            ? new LoginResponse(Message: "Internal error occurred while auth")
+            : new LoginResponse(Success: true, Token: jwtToken, RefreshToken: refreshToken);
     }
 
     public Task<LoginResponse> ReviveTokenUser(string refreshToken)
