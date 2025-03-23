@@ -132,8 +132,17 @@ public class AuthenticationService : IAuthenticationService
         string jwtToken = _tokenManagement.GenerateToken(claims);
         string refreshToken = _tokenManagement.GetRefreshToken();
 
-        int saveTokenResult = await _tokenManagement
-            .AddRefreshToken(_user.Id, refreshToken);
+        bool userTokenCheck = await _tokenManagement
+            .ValidateRefreshToken(refreshToken);
+        int saveTokenResult = 0;
+
+        if (userTokenCheck)
+            saveTokenResult = await _tokenManagement
+                .UpdateRefreshToken(_user.Id, refreshToken);
+        else
+            saveTokenResult = await _tokenManagement
+                .AddRefreshToken(_user.Id, refreshToken);
+
         return saveTokenResult <= 0
             ? new LoginResponse(Message: "Internal error occurred while auth")
             : new LoginResponse(Success: true, Token: jwtToken, RefreshToken: refreshToken);

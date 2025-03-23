@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -59,7 +60,6 @@ public class TokenManagement : ITokenManagement
             .GetBytes(_configuration["JWT:Key"]!));
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
         var expiration = DateTime.UtcNow.AddHours(2);
 
         var token = new JwtSecurityToken(
@@ -87,7 +87,8 @@ public class TokenManagement : ITokenManagement
             rng.GetBytes(randomBytes);
         }
 
-        return Convert.ToBase64String(randomBytes);
+        string token = Convert.ToBase64String(randomBytes);
+        return WebUtility.UrlEncode(token);
     }
 
     /// <summary>

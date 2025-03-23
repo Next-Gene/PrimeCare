@@ -38,9 +38,9 @@ public class UserManagement : IUserManagement
     /// The task result contains a boolean value indicating whether the user was successfully created.</returns>
     public async Task<bool> CreateUser(AppUser user)
     {
-        AppUser? _user = await GetUserByEmail(user.Email!);
+        var _user = await GetUserByEmail(user.Email!);
 
-        if (user != null) return false;
+        if (_user != null) return false;
 
         return (await _userManager
             .CreateAsync(user!, user!.PasswordHash!)).Succeeded;

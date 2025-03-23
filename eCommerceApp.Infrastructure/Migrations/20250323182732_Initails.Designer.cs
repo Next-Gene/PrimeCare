@@ -12,7 +12,7 @@ using eCommerceApp.Infrastructure.Data;
 namespace eCommerceApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250323175719_Initails")]
+    [Migration("20250323182732_Initails")]
     partial class Initails
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "33065cff-830c-4115-9e7a-0dba5313c1f2",
+                            Id = "b27f2ba7-79b6-443c-a0ef-49e6f7976854",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a50056ec-991c-447f-8553-08ca32a316c0",
+                            Id = "9a2e8b9d-7c3a-4666-adbf-799f72be903d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
