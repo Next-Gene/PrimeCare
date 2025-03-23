@@ -2,13 +2,12 @@ using eCommerceApp.Application.DependencyInjection;
 using eCommerceApp.Infrastructure.DependencyInjection;
 using Serilog;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
-    .WriteTo.File("log/log.text", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Host.UseSerilog();
@@ -30,7 +29,7 @@ builder.Services.AddCors(builder =>
     {
         options.AllowAnyHeader()
         .AllowAnyMethod()
-        .WithOrigins("https://localhost:7258")
+        .WithOrigins("https://localhost:7025")
         .AllowCredentials();
     });
 });
@@ -55,7 +54,6 @@ try
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
-
 
     app.MapControllers();
 

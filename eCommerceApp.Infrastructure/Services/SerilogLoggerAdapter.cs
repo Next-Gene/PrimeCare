@@ -9,13 +9,13 @@ namespace eCommerceApp.Infrastructure.Services;
 /// <typeparam name="T">The type for which the logger is being created.</typeparam>
 public class SerilogLoggerAdapter<T> : IAppLogger<T>
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<T> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SerilogLoggerAdapter{T}"/> class.
     /// </summary>
     /// <param name="logger">The logger instance to use for logging.</param>
-    public SerilogLoggerAdapter(ILogger logger)
+    public SerilogLoggerAdapter(ILogger<T> logger)
     {
         _logger = logger;
     }
