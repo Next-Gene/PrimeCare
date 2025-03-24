@@ -47,7 +47,7 @@ public class CategoryController : ControllerBase
 
 
     [HttpPut("update")]
-    public async Task<IActionResult> update(UpdateCategoryDto updateCategory)
+    public async Task<IActionResult> Update(UpdateCategoryDto updateCategory)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 

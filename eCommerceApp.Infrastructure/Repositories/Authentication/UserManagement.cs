@@ -127,10 +127,14 @@ public class UserManagement : IUserManagement
     /// The task result contains an integer indicating the result of the operation.</returns>
     public async Task<int> RemoveUserByEmail(string email)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        AppUser? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
-        _dbContext.Users.Remove(user);
+        if (user != null)
+        {
+            _dbContext.Users.Remove(user);
+            return await _dbContext.SaveChangesAsync();
+        }
 
-        return await _dbContext.SaveChangesAsync();
+        return 0; // Return 0 if the user was not found
     }
 }
