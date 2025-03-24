@@ -6,11 +6,11 @@ namespace eCommercecApp.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController : ControllerBase
+public class AccountController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
 
-    public AuthenticationController
+    public AccountController
         (IAuthenticationService authenticationService)
     {
         _authenticationService = authenticationService;
