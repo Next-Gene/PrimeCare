@@ -15,6 +15,7 @@ public class AccountController : ControllerBase
     {
         _authenticationService = authenticationService;
     }
+    
     [HttpPost("create")]
     public async Task<IActionResult> CreateUser(CreateUserDto user)
     {

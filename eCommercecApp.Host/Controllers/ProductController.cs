@@ -17,7 +17,7 @@ public class ProductController : ControllerBase
     }
 
 
-    [HttpGet("all")]
+    [HttpGet]
     public async Task<IActionResult> GetAllProducts()
     {
         var data = await _productService.GetAllAsync();
@@ -26,7 +26,7 @@ public class ProductController : ControllerBase
     }
 
 
-    [HttpGet("single/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetSingle(Guid id)
     {
         var data = await _productService.GetByIdAsync(id);
@@ -59,7 +59,7 @@ public class ProductController : ControllerBase
 
 
 
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _productService.DeleteAsync(id);

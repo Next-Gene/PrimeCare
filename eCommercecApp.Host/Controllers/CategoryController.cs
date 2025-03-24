@@ -16,7 +16,7 @@ public class CategoryController : ControllerBase
     }
 
 
-    [HttpGet("all")]
+    [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var data = await _categoryService.GetAllAsync();
@@ -25,7 +25,7 @@ public class CategoryController : ControllerBase
     }
 
 
-    [HttpGet("single/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetSingle(Guid id)
     {
         var data = await _categoryService.GetByIdAsync(id);
@@ -58,7 +58,7 @@ public class CategoryController : ControllerBase
 
 
 
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _categoryService.DeleteAsync(id);
