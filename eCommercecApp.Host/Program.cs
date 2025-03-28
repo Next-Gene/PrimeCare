@@ -10,7 +10,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-builder.Host.UseSerilog();
+//builder.Host.UseSerilog();
 Log.Logger.Information("Application is building....");
 
 // Add services to the container.

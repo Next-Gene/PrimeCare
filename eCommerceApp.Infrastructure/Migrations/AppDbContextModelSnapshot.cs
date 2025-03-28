@@ -51,13 +51,13 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b27f2ba7-79b6-443c-a0ef-49e6f7976854",
+                            Id = "25d954f9-3cf9-4d9a-8818-29ec0737da24",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9a2e8b9d-7c3a-4666-adbf-799f72be903d",
+                            Id = "77820794-1287-4894-9eb4-8d6fb6bfdce6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -171,6 +171,28 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("eCommerceApp.Domain.Entities.Cart.PaymentMethod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aeda317e-f16f-46e5-af04-241b1bb53bbd"),
+                            Name = "Credit Card"
+                        });
                 });
 
             modelBuilder.Entity("eCommerceApp.Domain.Entities.Category", b =>
