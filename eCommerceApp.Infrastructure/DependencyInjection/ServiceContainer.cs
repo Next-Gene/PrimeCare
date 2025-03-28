@@ -1,6 +1,6 @@
-﻿using eCommerceApp.Application.Services.Interfaces.Logging;
+﻿using eCommerceApp.Application.Services.Interfaces.Cart;
+using eCommerceApp.Application.Services.Interfaces.Logging;
 using eCommerceApp.Domain.Entities;
-using eCommerceApp.Domain.Entities.Cart;
 using eCommerceApp.Domain.Entities.Identity;
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Domain.Interfaces.Authentication;
@@ -102,6 +102,7 @@ public static class ServiceContainer
         services.AddScoped<IRoleManagement, RoleManagement>();
         
         services.AddScoped<IPaymentMethod, PaymentMethodRepository>();
+        services.AddScoped<IPaymentService, StripePaymentService>();
 
         return services;
     }
