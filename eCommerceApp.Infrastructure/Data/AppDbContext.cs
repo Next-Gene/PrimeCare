@@ -19,6 +19,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Category> Categories { get; set; }
     public DbSet<RefreshToken> RefreshToken { get; set; }
     public DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public DbSet<Achieve> CheckoutAchieves { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +33,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
                 Id = Guid.NewGuid().ToString(),
                 Name = "Admin",
                 NormalizedName = "ADMIN"
-            },            
+            },
             new IdentityRole
             {
                 Id = Guid.NewGuid().ToString(),
